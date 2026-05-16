@@ -108,6 +108,6 @@ GO
 EXEC sp_CapNhatXepLoaiDeTai;
 GO
 
-SELECT *
-FROM DETAI_DIEM;
-GO
+-- SELECT *
+-- FROM DETAI_DIEM;
+-- GO
