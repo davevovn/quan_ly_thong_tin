@@ -33,56 +33,56 @@ go
 -- Thứ tự theo dependency: bảng cha → bảng con
 -- ============================================================
 -- ===== Lớp 1: Bảng độc lập =====
-CREATE TABLE sinhvien
+CREATE TABLE SINHVIEN
   (
      mssv   CHAR(8) NOT NULL,
      tensv  NVARCHAR(30) NOT NULL,
      sodt   VARCHAR(10) NULL,
      lop    CHAR(10) NOT NULL,
      diachi NCHAR(50) NULL,
-     CONSTRAINT pk_sinhvien PRIMARY KEY (mssv)
+     CONSTRAINT PK_SINHVIEN PRIMARY KEY (mssv)
   );
 
 go
 
-CREATE TABLE detai
+CREATE TABLE DETAI
   (
      msdt  CHAR(6) NOT NULL,
      tendt NVARCHAR(30) NOT NULL,
-     CONSTRAINT pk_detai PRIMARY KEY (msdt)
+     CONSTRAINT PK_DETAI PRIMARY KEY (msdt)
   );
 
 go
 
-CREATE TABLE hocham
+CREATE TABLE HOCHAM
   (
      mshh  INT NOT NULL,
      tenhh NVARCHAR(20) NOT NULL,
-     CONSTRAINT pk_hocham PRIMARY KEY (mshh)
+     CONSTRAINT PK_HOCHAM PRIMARY KEY (mshh)
   );
 
 go
 
-CREATE TABLE hocvi
+CREATE TABLE HOCVI
   (
      mshv  INT NOT NULL,
      tenhv NVARCHAR(20) NOT NULL,
-     CONSTRAINT pk_hocvi PRIMARY KEY (mshv)
+     CONSTRAINT PK_HOCVI PRIMARY KEY (mshv)
   );
 
 go
 
-CREATE TABLE chuyennganh
+CREATE TABLE CHUYENNGANH
   (
      mscn  INT NOT NULL,
      tencn NVARCHAR(30) NOT NULL,
-     CONSTRAINT pk_chuyennganh PRIMARY KEY (mscn)
+     CONSTRAINT PK_CHUYENNGANH PRIMARY KEY (mscn)
   );
 
 go
 
 -- ===== Lớp 2: Phụ thuộc lớp 1 =====
-CREATE TABLE giaovien
+CREATE TABLE GIAOVIEN
   (
      msgv   INT NOT NULL,
      tengv  NVARCHAR(30) NOT NULL,
@@ -90,75 +90,75 @@ CREATE TABLE giaovien
      sodt   VARCHAR(10) NOT NULL,
      mshh   INT NULL,
      namhh  SMALLDATETIME NOT NULL,
-     CONSTRAINT pk_giaovien PRIMARY KEY (msgv),
-     CONSTRAINT fk_giaovien_hocham FOREIGN KEY (mshh) REFERENCES hocham(mshh)
+     CONSTRAINT PK_GIAOVIEN PRIMARY KEY (msgv),
+     CONSTRAINT FK_GIAOVIEN_HOCHAM FOREIGN KEY (mshh) REFERENCES HOCHAM(mshh)
   );
 
 go
 
-CREATE TABLE sv_detai
+CREATE TABLE SV_DETAI
   (
      mssv CHAR(8) NOT NULL,
      msdt CHAR(6) NOT NULL,
-     CONSTRAINT pk_sv_detai PRIMARY KEY (mssv, msdt),
-     CONSTRAINT fk_svdt_sv FOREIGN KEY (mssv) REFERENCES sinhvien(mssv),
-     CONSTRAINT fk_svdt_dt FOREIGN KEY (msdt) REFERENCES detai(msdt)
+     CONSTRAINT PK_SV_DETAI PRIMARY KEY (mssv, msdt),
+     CONSTRAINT FK_svdt_sv FOREIGN KEY (mssv) REFERENCES SINHVIEN(mssv),
+     CONSTRAINT FK_svdt_dt FOREIGN KEY (msdt) REFERENCES DETAI(msdt)
   );
 
 go
 
 -- ===== Lớp 3: Phụ thuộc GIAOVIEN =====
-CREATE TABLE gv_hv_cn
+CREATE TABLE GV_HV_CN
   (
      msgv INT NOT NULL,
      mshv INT NOT NULL,
      mscn INT NOT NULL,
      nam  SMALLDATETIME NOT NULL,
-     CONSTRAINT pk_gv_hv_cn PRIMARY KEY (msgv, mshv, mscn),
-     CONSTRAINT fk_gvhvcn_gv FOREIGN KEY (msgv) REFERENCES giaovien(msgv),
-     CONSTRAINT fk_gvhvcn_hv FOREIGN KEY (mshv) REFERENCES hocvi(mshv),
-     CONSTRAINT fk_gvhvcn_cn FOREIGN KEY (mscn) REFERENCES chuyennganh(mscn)
+     CONSTRAINT PK_GV_HV_CN PRIMARY KEY (msgv, mshv, mscn),
+     CONSTRAINT FK_gvhvcn_gv FOREIGN KEY (msgv) REFERENCES GIAOVIEN(msgv),
+     CONSTRAINT FK_gvhvcn_hv FOREIGN KEY (mshv) REFERENCES HOCVI(mshv),
+     CONSTRAINT FK_gvhvcn_cn FOREIGN KEY (mscn) REFERENCES CHUYENNGANH(mscn)
   );
 
 go
 
-CREATE TABLE gv_hddt
+CREATE TABLE GV_HDDT
   (
      msgv INT NOT NULL,
      msdt CHAR(6) NOT NULL,
      diem FLOAT NOT NULL,
-     CONSTRAINT pk_gv_hddt PRIMARY KEY (msgv, msdt),
-     CONSTRAINT fk_gvhddt_gv FOREIGN KEY (msgv) REFERENCES giaovien(msgv),
-     CONSTRAINT fk_gvhddt_dt FOREIGN KEY (msdt) REFERENCES detai(msdt)
+     CONSTRAINT PK_GV_HDDT PRIMARY KEY (msgv, msdt),
+     CONSTRAINT FK_gvhddt_gv FOREIGN KEY (msgv) REFERENCES GIAOVIEN(msgv),
+     CONSTRAINT FK_gvhddt_dt FOREIGN KEY (msdt) REFERENCES DETAI(msdt)
   );
 
 go
 
-CREATE TABLE gv_pbdt
+CREATE TABLE GV_PBDT
   (
      msgv INT NOT NULL,
      msdt CHAR(6) NOT NULL,
      diem FLOAT NOT NULL,
-     CONSTRAINT pk_gv_pbdt PRIMARY KEY (msgv, msdt),
-     CONSTRAINT fk_gvpbdt_gv FOREIGN KEY (msgv) REFERENCES giaovien(msgv),
-     CONSTRAINT fk_gvpbdt_dt FOREIGN KEY (msdt) REFERENCES detai(msdt)
+     CONSTRAINT PK_GV_PBDT PRIMARY KEY (msgv, msdt),
+     CONSTRAINT FK_gvpbdt_gv FOREIGN KEY (msgv) REFERENCES GIAOVIEN(msgv),
+     CONSTRAINT FK_gvpbdt_dt FOREIGN KEY (msdt) REFERENCES DETAI(msdt)
   );
 
 go
 
-CREATE TABLE gv_uvdt
+CREATE TABLE GV_UVDT
   (
      msgv INT NOT NULL,
      msdt CHAR(6) NOT NULL,
      diem FLOAT NOT NULL,
-     CONSTRAINT pk_gv_uvdt PRIMARY KEY (msgv, msdt),
-     CONSTRAINT fk_gvuvdt_gv FOREIGN KEY (msgv) REFERENCES giaovien(msgv),
-     CONSTRAINT fk_gvuvdt_dt FOREIGN KEY (msdt) REFERENCES detai(msdt)
+     CONSTRAINT PK_GV_UVDT PRIMARY KEY (msgv, msdt),
+     CONSTRAINT FK_gvuvdt_gv FOREIGN KEY (msgv) REFERENCES GIAOVIEN(msgv),
+     CONSTRAINT FK_gvuvdt_dt FOREIGN KEY (msdt) REFERENCES DETAI(msdt)
   );
 
 go
 
-CREATE TABLE hoidong
+CREATE TABLE HOIDONG
   (
      mshd      INT NOT NULL,
      phong     INT NOT NULL,
@@ -166,32 +166,32 @@ CREATE TABLE hoidong
      ngayhd    SMALLDATETIME NULL,
      tinhtrang NVARCHAR(30) NULL,
      msgv      INT NULL,
-     CONSTRAINT pk_hoidong PRIMARY KEY (mshd),
-     CONSTRAINT fk_hoidong_gv FOREIGN KEY (msgv) REFERENCES giaovien(msgv)
+     CONSTRAINT PK_HOIDONG PRIMARY KEY (mshd),
+     CONSTRAINT FK_HOIDONG_GV FOREIGN KEY (msgv) REFERENCES GIAOVIEN(msgv)
   );
 
 go
 
 -- ===== Lớp 4: Phụ thuộc HOIDONG =====
-CREATE TABLE hoidong_gv
+CREATE TABLE HOIDONG_GV
   (
      mshd INT NOT NULL,
      msgv INT NOT NULL,
-     CONSTRAINT pk_hoidong_gv PRIMARY KEY (mshd, msgv),
-     CONSTRAINT fk_hdgv_hd FOREIGN KEY (mshd) REFERENCES hoidong(mshd),
-     CONSTRAINT fk_hdgv_gv FOREIGN KEY (msgv) REFERENCES giaovien(msgv)
+     CONSTRAINT PK_HOIDONG_GV PRIMARY KEY (mshd, msgv),
+     CONSTRAINT FK_hdgv_hd FOREIGN KEY (mshd) REFERENCES HOIDONG(mshd),
+     CONSTRAINT FK_hdgv_gv FOREIGN KEY (msgv) REFERENCES GIAOVIEN(msgv)
   );
 
 go
 
-CREATE TABLE hoidong_dt
+CREATE TABLE HOIDONG_DT
   (
      mshd      INT NOT NULL,
      msdt      CHAR(6) NOT NULL,
      quyetdinh NCHAR(10) NULL,
-     CONSTRAINT pk_hoidong_dt PRIMARY KEY (mshd, msdt),
-     CONSTRAINT fk_hddt_hd FOREIGN KEY (mshd) REFERENCES hoidong(mshd),
-     CONSTRAINT fk_hddt_dt FOREIGN KEY (msdt) REFERENCES detai(msdt)
+     CONSTRAINT PK_HOIDONG_DT PRIMARY KEY (mshd, msdt),
+     CONSTRAINT FK_hddt_hd FOREIGN KEY (mshd) REFERENCES HOIDONG(mshd),
+     CONSTRAINT FK_hddt_dt FOREIGN KEY (msdt) REFERENCES DETAI(msdt)
   );
 
 go
@@ -200,7 +200,7 @@ go
 -- 1.2. INSERT dữ liệu
 -- ============================================================
 -- ===== Lớp 1 =====
-INSERT INTO sinhvien
+INSERT INTO SINHVIEN
             (mssv,
              tensv,
              sodt,
@@ -237,7 +237,7 @@ VALUES      ('13520001',
              'IE208.F33',
              N'QUẬN 2');
 
-INSERT INTO detai
+INSERT INTO DETAI
             (msdt,
              tendt)
 VALUES      ('97001',
@@ -253,7 +253,7 @@ VALUES      ('97001',
             ('97006',
              N'Hệ giải toán thông minh');
 
-INSERT INTO hocham
+INSERT INTO HOCHAM
             (mshh,
              tenhh)
 VALUES      (1,
@@ -261,7 +261,7 @@ VALUES      (1,
             (2,
              N'GIÁO SƯ');
 
-INSERT INTO hocvi
+INSERT INTO HOCVI
             (mshv,
              tenhv)
 VALUES      (1,
@@ -275,7 +275,7 @@ VALUES      (1,
             (5,
              N'Tiến sĩ Khoa học');
 
-INSERT INTO chuyennganh
+INSERT INTO CHUYENNGANH
             (mscn,
              tencn)
 VALUES      (1,
@@ -288,7 +288,7 @@ VALUES      (1,
              N'GIS');
 
 -- ===== Lớp 2 =====
-INSERT INTO giaovien
+INSERT INTO GIAOVIEN
             (msgv,
              tengv,
              diachi,
@@ -326,7 +326,7 @@ VALUES      (201,
              2,
              '2005-01-01');
 
-INSERT INTO sv_detai
+INSERT INTO SV_DETAI
             (mssv,
              msdt)
 VALUES      ('13520001',
@@ -343,7 +343,7 @@ VALUES      ('13520001',
              '97005');
 
 -- ===== Lớp 3 =====
-INSERT INTO gv_hv_cn
+INSERT INTO GV_HV_CN
             (msgv,
              mshv,
              mscn,
@@ -373,7 +373,7 @@ VALUES      (201,
              2,
              '2014-01-01');
 
-INSERT INTO gv_hddt
+INSERT INTO GV_HDDT
             (msgv,
              msdt,
              diem)
@@ -393,7 +393,7 @@ VALUES      (201,
              '97005',
              9);
 
-INSERT INTO gv_pbdt
+INSERT INTO GV_PBDT
             (msgv,
              msdt,
              diem)
@@ -413,7 +413,7 @@ VALUES      (201,
              '97002',
              9);
 
-INSERT INTO gv_uvdt
+INSERT INTO GV_UVDT
             (msgv,
              msdt,
              diem)
@@ -472,7 +472,7 @@ VALUES      (205,
              '97006',
              9);
 
-INSERT INTO hoidong
+INSERT INTO HOIDONG
             (mshd,
              phong,
              tgbd,
@@ -499,7 +499,7 @@ VALUES      (1,
              203);
 
 -- ===== Lớp 4 =====
-INSERT INTO hoidong_gv
+INSERT INTO HOIDONG_GV
             (mshd,
              msgv)
 VALUES      (1,
@@ -527,7 +527,7 @@ VALUES      (1,
             (3,
              204);
 
-INSERT INTO hoidong_dt
+INSERT INTO HOIDONG_DT
             (mshd,
              msdt,
              quyetdinh)
@@ -559,46 +559,46 @@ go
 -- RESULT
 -- ============================================================
 SELECT *
-FROM   sinhvien;
+FROM   SINHVIEN;
 
 SELECT *
-FROM   detai;
+FROM   DETAI;
 
 SELECT *
-FROM   giaovien;
+FROM   GIAOVIEN;
 
 SELECT *
-FROM   hocham;
+FROM   HOCHAM;
 
 SELECT *
-FROM   hocvi;
+FROM   HOCVI;
 
 SELECT *
-FROM   chuyennganh;
+FROM   CHUYENNGANH;
 
 SELECT *
-FROM   sv_detai;
+FROM   SV_DETAI;
 
 SELECT *
-FROM   gv_hv_cn;
+FROM   GV_HV_CN;
 
 SELECT *
-FROM   gv_hddt;
+FROM   GV_HDDT;
 
 SELECT *
-FROM   gv_pbdt;
+FROM   GV_PBDT;
 
 SELECT *
-FROM   gv_uvdt;
+FROM   GV_UVDT;
 
 SELECT *
-FROM   hoidong;
+FROM   HOIDONG;
 
 SELECT *
-FROM   hoidong_gv;
+FROM   HOIDONG_GV;
 
 SELECT *
-FROM   hoidong_dt;
+FROM   HOIDONG_DT;
 
 -- ============================================================
 -- RESULT

@@ -13,11 +13,11 @@ BEGIN
 
     SELECT @diem_tb = AVG(diem)
     FROM (
-        SELECT diem FROM gv_hddt WHERE msdt = @msdt
+        SELECT diem FROM GV_HDDT WHERE msdt = @msdt
         UNION ALL
-        SELECT diem FROM gv_pbdt WHERE msdt = @msdt
+        SELECT diem FROM GV_PBDT WHERE msdt = @msdt
         UNION ALL
-        SELECT diem FROM gv_uvdt WHERE msdt = @msdt
+        SELECT diem FROM GV_UVDT WHERE msdt = @msdt
     ) AS TongHopDiem;
 
     RETURN ISNULL(@diem_tb, 0);
@@ -56,8 +56,8 @@ AS
 RETURN
 (
     SELECT sv.mssv, sv.tensv
-    FROM sinhvien sv
-    JOIN sv_detai svdt ON sv.mssv = svdt.mssv
+    FROM SINHVIEN sv
+    JOIN SV_DETAI svdt ON sv.mssv = svdt.mssv
     WHERE svdt.msdt = @msdt
 );
 GO
