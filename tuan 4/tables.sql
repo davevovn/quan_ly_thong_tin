@@ -38,7 +38,7 @@ CREATE TABLE SINHVIEN
      MSSV   CHAR(8) NOT NULL,
      TENSV  NVARCHAR(30) NOT NULL,
      SODT   VARCHAR(10) NULL,
-     lop    CHAR(10) NOT NULL,
+     LOP    CHAR(10) NOT NULL,
      DIACHI NCHAR(50) NULL,
      CONSTRAINT PK_SINHVIEN PRIMARY KEY (MSSV)
   );
@@ -113,7 +113,7 @@ CREATE TABLE GV_HV_CN
      MSGV INT NOT NULL,
      MSHV INT NOT NULL,
      MSCN INT NOT NULL,
-     nam  SMALLDATETIME NOT NULL,
+     NAM  SMALLDATETIME NOT NULL,
      CONSTRAINT PK_GV_HV_CN PRIMARY KEY (MSGV, MSHV, MSCN),
      CONSTRAINT FK_gvhvcn_gv FOREIGN KEY (MSGV) REFERENCES GIAOVIEN(MSGV),
      CONSTRAINT FK_gvhvcn_hv FOREIGN KEY (MSHV) REFERENCES HOCVI(MSHV),
@@ -204,7 +204,7 @@ INSERT INTO SINHVIEN
             (MSSV,
              TENSV,
              SODT,
-             lop,
+             LOP,
              DIACHI)
 VALUES      ('13520001',
              N'Nguyễn Văn An',
@@ -347,7 +347,7 @@ INSERT INTO GV_HV_CN
             (MSGV,
              MSHV,
              MSCN,
-             nam)
+             NAM)
 VALUES      (201,
              1,
              1,
